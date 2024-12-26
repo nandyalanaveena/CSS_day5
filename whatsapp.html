@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+    <style>
+        *{
+	padding: 0;
+	margin: 0;
+	box-sizing: border-box;
+	font-family: sans-serif;
+}
+.container {
+	width: 500px;
+	margin: auto;
+}
+.chat {
+	display: flex;
+	flex-direction: column;
+	height: 100vh;
+	background: #f1f0e8;
+}
+.chat-header {
+	display: flex;
+	cursor: pointer;
+}
+.profile {
+	width: 100%;
+	background: #036055;
+	display: flex;
+	align-items: center;
+	height: 60px;
+	padding: 0px 10px;
+	position: relative;
+}
+.profile .pp {
+	width: 50px;
+	display: inline-block;
+	border-radius: 50%;
+	margin-left: 32px;
+}
+.profile .arrow {
+	display: inline-block;
+	width: 30px;
+	position: absolute;
+	top: 19px;
+	cursor: pointer;
+}
+.profile h2 {
+	display: inline-block;
+	line-height: 60px;
+	vertical-align: bottom;
+	color: #fff;
+	font-size: 20px;
+}
+.profile span {
+	color: #ccc;
+	position: absolute;
+	top: 42px;
+	left: 100px;
+	font-size: 14px;
+}
+.right .icon {
+	display: inline-block;
+	width: 25px;
+	margin-left: 10px;
+}
+.profile .left {
+	flex: 1;
+}
+
+.chat-box {
+	background: url('../img/bg.jpeg');
+	background-attachment: fixed;
+	padding-left: 20px;
+	overflow-y: scroll;
+	flex: 1;
+}
+.chat-box .img_chat {
+	width: 280px;
+}
+
+.chat-r {
+	display: flex;
+}
+.chat-r .sp {
+	flex: 1;
+}
+
+.chat-l {
+	display: flex;
+}
+.chat-l .sp {
+	flex: 1;
+}
+
+.chat-box .mess {
+	max-width: 300px;
+	background: #F7FCF6;
+	padding: 3px;
+	border-radius: 10px;
+	margin: 20px 0px;
+	cursor: pointer;
+}
+.chat-box .mess p {
+	word-break: break-all;
+	font-size: 18px;
+}
+.chat-box .mess-r {
+    background: #E2FFC7;
+}
+.chat-box .emoji {
+	width: 20px;
+}
+.chat-box .check {
+	float: right;
+}
+.chat-box .check img {
+	width: 20px;
+}
+.chat-box .check span {
+	color: #888;
+	font-size: 12px;
+	font-weight: 700px;
+}
+
+*::-webkit-scrollbar {
+	width: 5px;
+}
+*::-webkit-scrollbar-track {
+	background: #f1f1f1;
+}
+*::-webkit-scrollbar-thumb {
+	background: #aaa;
+}
+*::-webkit-scrollbar-thumb:hover {
+	background: #555;
+}
+
+.chat-footer {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	border-radius: 60px;
+	position: relative;
+	cursor: pointer;
+}
+.chat-footer textarea {
+	display: block;
+	flex: 1;
+	width: 100%;
+	height: 50px;
+	border-radius: 60px;
+	margin: 5px;
+	padding: 10px;
+	outline: none;
+	font-size: 19px;
+	padding-left: 40px;
+	padding-right: 90px;
+	border: 2px solid #ccc;
+	color: #555;
+	resize: none;
+}
+.chat-footer .mic {
+	display: block;
+	width: 55px;
+	height: 55px;
+	margin-right: 20px;
+}
+
+.chat-footer .emo{
+	display: block;
+	width: 35px;
+	height: 35px;
+	position: absolute;
+	left: 10px;
+	top: 12px;
+}
+.chat-footer .icons {
+	position: absolute;
+	right: 100px;
+	top: 10px;
+}
+.chat-footer .icons img{
+    display: flex;
+    width: 35px;
+    height: 35px;
+    margin-right:10px;
+}
+    </style>
+</head>
+<body>
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>Whatsapp UI</title>
+    </head>
+    <body>
+        <div class="container">
+            <div class="chat">
+                <div class="chat-header">
+                    <div class="profile">
+                        <div class="left">
+                            <img src="img.png" alt="">
+                            <img src="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wCEAAkGBwgHBgkIBwgKCgkLDRYPDQwMDRsUFRAWIB0iIiAdHx8kKDQsJCYxJx8fLT0tMTU3Ojo6Iys/RD84QzQ5OjcBCgoKDQwNGg8PGjclHyU3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3N//AABEIAMAAzAMBIgACEQEDEQH/xAAbAAEAAgMBAQAAAAAAAAAAAAAAAQYDBAUHAv/EAEUQAAEDAwEFAwkEBwUJAAAAAAEAAgMEBREGEiExQVETYXEHFCJSgZGxwdEjMqHhFkJicpPi8CQ1Q1OyFSUzRVVzkqLS/8QAFAEBAAAAAAAAAAAAAAAAAAAAAP/EABQRAQAAAAAAAAAAAAAAAAAAAAD/2gAMAwEAAhEDEQA/APcUREBERAREQEREBERAREQEREBERAREQEREBERAREQEREBERAREQEREBERARMqMgcSglFrS11NFufOwHpnJ9y+RcIHDLXEjuaUG2i1RWRkZDXe5DVN3YJ9oQbSLSNY4OP2Zc0cwQCssVZA8hu1sOP6rxhBsImUQEREBERAREQEREBERAREQEREBQThY56iKnhdNO8MjYMuc47guDPNPeMkOfBQk42cYfIO/oO5B0J7o1z3R0LO3eNxfnDB3Z5nuC1HRT1G+rnc4f5cZ2Qs0bGRs2GDZaBgADC+kGOOGOIYjY1vgOKyBEQCSihSgKCMjDvSHRwypRAjdJCfsZRj1H7x+S3Kasjld2Tx2U3HYdz7x1WmeGF8yxslZsyAnG9pG4tPUHkg6+VK5lPWuhkZBWHO0MMmxuceh6FdLKCUREBERAREQEREBERAWOaVkMbpJXhkbG7TnE4AAX2VQtfXWauq4NOW532srh25HIHgD8Sg+qW5VGqru6WMbFopH/Z5GDI7rj+sePCytaGNDQAA3gB0Wra7fDbKGKkpx6DB97m48yfFbaAiIg+JZGQxvkme2ONgy5zjuC4U97mqD/YmiKE8JHDLnd4XM1fWPr7nDZIS5sQxJUkcxxwsoAa0NaMADACDP57V8XVMh9y+466djw7bWqiDv0dzinkZBI4NncCWDk8DjjvW+qLdy6OhdPFkSwESxuHFrh+WVcbbVNrrfT1TeErA5BsoiIPiWKOaJ8UzQ6N4wQtGx3SakuD7JdX7Uo9KkqD/jx9D+0F0VytRW11wo9qn9Ctp3drTSDk4cvagtWVK5GmLu282qOpIDZ2kxzs9V44j5rroCIiAiIgIiICIoKDQv1zjs9qnrpRtCNvot9Zx3Ae9UfQlHJVSVd8rTtzTvIYT/AOx+Sy+VSuc/zK1xHe89o4dTwb8SrHbKNtvt1NSMG6KMD28/xQbR37zxREQEREFAkJ/TS6dpxwNnvGAuitfWFObdeaa7saexeOzn/Z7/AOuiztcHta5pBDhkYKCURDwQa9wIbQVBdwEZ+C7ejA8aaotvjsnHhlVi9PdUdlbKb06mpcBgcm8yVeqCmZR0UNLH92Jgbnqg2EREBERBV7VVts+vKmhbllPcGhwaeAkxkY8d49yvq838oUbqd9uucWRLFJsZH/kD+B969Co521VNDUM4SsDh7QgzoiICIiAiIgKCpUdEHmN6/wB4eUuCF+CyF7PYGja+IV54knqqLbD2vlJrpPVMp/ABXrkgIiICIiDDV0sNXTyU9SwSRSDZc0/1xVErrNeLE9xodqroc5aAMuZ4j6K9VVXT0gzUStYTyzvPsWg+9x5+whkcOp9HKCjN1MWEialLXcMZx8VmhulxukgitVEdo7ts7w35K2PuUUhzJQxu8cH5L7ZdQ3c2JrG9AAgx6b0821OdVVUnnFdKPSlO8M6gLuhaMN0ieQHAt/FbrXNc0OYQQeYOUH0iIgIiIOFreDzjTVVsgEx4k9gIz+GV09CVHnOl6J2cljSzJ7isOoG5sNeOsD/gVreS9+1pnZ9WZ4QW9ERAREQEREBQVKgoPLraex8pFa07toyjf4A/JXxUS/D/AGb5R4J3eiyWVjiTzDhslXs5ycoCIiAq5cdRB9e63Wv7SRn/ABaji2LuHUrFrC9TQPitNuJ87qGnbeP8Jp+Z+C0aCjjoqdsUeCeLn83HqgytZh5kcXPkPF7zklfaIgIiIJyRvHHks8dbUU7XGAtLxvaH/dceh6eI9xWunsCCwWu5xXKJz42mOVh2ZYXfeYe/6re471Qq6rmtNVFdadhcGehO0frx96vUMsdRCyeFwdHI0Oa4cwUH2iIg5eqJOx07cHHd9i4D27vmsfkxZsaaDvXmefxWn5QJ+x07IzO+aVjB/qPwXc0PTebaXoWkYLmbZz3oO8iIgIiICIiAiIg8+8q1C4RUdyjG+MmJ56Z3j5qwWqr8+ttNVA57SME+PP8AFdG/21l2tFTQv3GVh2D6rhvB9+FRtBXB8ZqLNV+hLA5zmNPducEFzXzLKIonyO3NYC4nuC+uHBcfV87qfTda9pwXM2AfE4QVKzl1dXVl2nO06Z5DM8h/WB7F11p2aHsrZStA3bAcfbvW7goIRCQOajbb6zfeglFAc31h71I38EBFOEweYKD4ljbNE+KQZjeMOHULPoOqf5rPbZzl9HIQ0/sk/VYj0WrYXGDWc7eDain2iPBBeERY6iaOmgknldiONpc49wQUvXTnXG7220QbyXAkD1nHHwBK9Jp42wQxwsGGsaGj2Bef6EpX3jUNZf6hp2I3FsQPDaP0b8V6IglERAREQEREBERBBXnevrTPbLhDqG2jBa4dsBwDuRI6HgV6KsVTTxVUD4J2B8UjS17TwIQcG0XKC7UEVXAdzx6bebHcwVF5t0d2t0tHJI6MSYw8DJGDngqhURVmhb0SA6a1TnIPd0/eH4q60VXBW0zKilkEkTxkEfPoe5BV26Hc0ANvVSAOAEf8yn9CJP8ArdV/D/NW893BQgpztETH/nc/ti/mWJ+g5ncbwXH9qE//AEruiChnQFQPu3Vmf+2R81LdCVoP96sx3Nd9Ve0QUtmiKkD++pWnuYfqsg0bWN4X6b+H/MrgoQVL9D67lf5f4X8y2rPpd9vuja+e4vqpGsLQHR449+SrIo+KCee/mVTdYXCe41sOnbWduSRwM5HLo35lb+qdSttrfM6L7W4P3Brd/Z55nv6BbuiNNOtUTq+4DauVTvcTvMbTvx49UHcsdshtFsgooBujG93rO5ldBRhSgIiICIiAiIgIiICIiDTulvprlSPpayMPjeMYPLvHevNa2iu2iK3tabM9tkdx/VPc7o7v4L1ZfE0Mc8bo5mNex4w5rhkEIKpZtR0F1jHZyCOQY2mPO8Lr5/Iqr3/QJ7Q1dgk7GQb+xccAfunl4KvxX69WGUU9wjkjxuAlbuPh+W5B6SiqVNrqhIaaqJ7QeLmb8exdan1PZqhuW10bM8pMtwg66LUjudvk+5XUzvCVql9womDafW04HfK36oNpFxqnVFmpmkurWPxyiBcVwa/Xzd7LbSOc48Hy/QILrJJHFGZZXtZG3e5zjgAeKpl51e+pl8w04x000no9sB/pHzWhTWbUOq5Wy10j46biC/0Wj91q9A0/pyhsUX9nZtzuGHzP+8UHH0fpD/ZxFwuuJa93pYO/sye/mVccJgdFKAiIgIiICIiAiIgIiICIiAiIgLFU00FVEYqqGOaM8WSMDgfYVlRBUbh5P7LVEupWy0ch/wAt2W+4/LC4VV5M6gEmmuMTxy7RhHwXpaIPJpPJzeWn0ZKV4/fI+S+o/JxdnH05qWPv2iV6uiDzuj8mTA4OrbiSObYWYz7SrRa9KWa2EOgpGvkH68p2z9F3EQQO5SiICIiAiIgIiICIiAiIgIiICIiAiIgIiICIiAiIgIiICIiAiIgIiICIiAiIg//Z" class="pp">
+                            <h2>Lucky</h2>
+                            <span>online</span>
+                        </div>
+                        <div class="right">
+                            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTuj1w0nUVan03ESfA1xaE4wJzN5Xbqu726zA&s"" class="icon">
+                            <img src="https://i.pinimg.com/originals/ec/bb/68/ecbb680ffe95b03678aaeced21d89e4e.png" class="icon">
+                            <img src="data:image/png;base64,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" class="icon">
+                        </div>
+                    </div>
+                </div>
+                <div class="chat-box">
+                    <div class="chat-r">
+                        <div class="sp"></div>
+                        <div class="mess mess-r">
+                            <p><img src="" class="">
+                                Who was that philosopher you shared with me recently?
+                            </p>
+                            <div class="check">
+                                <span>4:00 PM</span>
+                                <img src="">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="chat-l">
+                        <div class="mess">
+                            <p>
+                                Roland Barthes <img src=""  qwa class="emoji">
+                            </p>
+                            <div class="check">
+                                <span>4:00 PM</span>
+                            </div>
+                        </div>
+                        <div class="sp"></div>
+                    </div>
+    
+                    <div class="chat-r">
+                        <div class="sp"></div>
+                        <div class="mess mess-r">
+                            <p>
+                               That's him! What was his vision statement?
+                            </p>
+                            <div class="check">
+                                <span>4:01 PM</span>
+                                <img src="">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="chat-l">
+                        <div class="mess">
+                            <p>Ultimately in order to see a pohotograph well, it is best to look away or close your eyes.</p>
+                            <div class="check">
+                                <span>4:01 PM</span>
+                            </div>
+                        </div>
+                        <div class="sp"></div>
+                    </div>
+    
+                    <div class="chat-r">
+                        <div class="sp"></div>
+                        <div class="mess mess-r">
+                            <p>
+                               I've seen a lot of it yeah.
+                            </p>
+                            <div class="check">
+                                <span>4:02 PM</span>
+                                <img src="">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="chat-l">
+                        <div class="mess">
+                            <p>
+                               Are there any other artists you really enjoy?
+                            </p>
+                            <div class="check">
+                                <span>4:02 PM</span>
+                            </div>
+                        </div>
+                        <div class="sp"></div>
+                    </div>
+    
+                    <div class="chat-r">
+                        <div class="sp"></div>
+                        <div class="mess mess-r">
+                            <img src="./image.jfif" class="img_chat">
+                            <div class="check">
+                                <span>4:03 PM</span>
+                                <img src="">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="chat-l">
+                        <div class="mess">
+                            <p>
+                               haa ok 
+                            </p>
+                            <div class="check">
+                                <span>4:04 PM</span>
+                            </div>
+                        </div>
+                        <div class="sp"></div>
+                    </div>
+                    <div class="chat-r">
+                        <div class="sp"></div>
+                        <div class="mess mess-r">
+                            
+                        </div>
+                    </div>
+                </div>
+                <div class="chat-footer">
+                    <img src="data:image/png;base64,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" class="emo">
+                    <textarea placeholder="Type a message"></textarea>
+                    <div class="icons">
+                    <a href=""><i class="fa-solid fa-phone" style="font-size: 35px;"></i></a>
+                    <a href=""><i class="fa-solid fa-camera" style="font-size:35px;"></i></a>
+                    <a href=""><i class="fa-solid fa-microphone" style="font-size:35px;"></i></a>
+                </div>
+            </div>
+        </div>
+        
+    </body>
+    </html>
+</body>
+</html>
